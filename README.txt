@@ -1,3 +1,4 @@
-First Commit Readme
+here is the readme
 
-add new lines
+stuff to get:
+wget http://littleosbook.github.com/files/stage2_eltorito
