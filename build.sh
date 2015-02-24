@@ -1,5 +1,5 @@
 #!/bin/bash
-nasm -f elf32 loader.s
+nasm -f elf32 -O0 loader.s
 ld -T link.ld -melf_i386 loader.o -o kernel.elf
 cp stage2_eltorito iso/boot/grub
 cp kernel.elf iso/boot/
