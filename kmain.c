@@ -1,4 +1,5 @@
 #include "io.h"
+//#include "fb.h"
 
 /* The C function */
 int sum_of_three(int arg1, int arg2, int arg3)
@@ -26,6 +27,23 @@ int sum_of_three(int arg1, int arg2, int arg3)
 #define FB_LT_BROWN    14
 #define FB_WHITE       15
 
+// IO PORTS
+#define FB_COMMAND_PORT 0x3D4
+#define FB_DATA_PORT    0x3D5
+
+// IO PORT COMMANDS
+#define FB_HIGH_BYTE_COMMAND    14 // move cursor command low
+#define FB_LOW_BYTE_COMMAND     15 // move cursor command high
+
+
+/** fb_write_cell:
+ *  used to write a character to a cell in the framebuffer
+ *
+ * param i which cell to write to
+ * param c the ascii char to write
+ * param fg foreground color
+ * param bf background color
+ */
 void fb_write_cell(unsigned int i, char c, unsigned char fg, unsigned char bg)
 {
     char *fb = (char *) 0x000B8000;
@@ -33,24 +51,35 @@ void fb_write_cell(unsigned int i, char c, unsigned char fg, unsigned char bg)
     fb[i*2 + 1] = ((fg & 0x0F) << 4) | (bg & 0x0F);
 }
 
-// CUSROR MOVING 
-// io ports
-#define FB_COMMAND_PORT 0x3D4
-#define FB_DATA_PORT    0x3D5
-
-// io port commands
-#define FB_HIGH_BYTE_COMMAND    14
-#define FB_LOW_BYTE_COMMAND     15
-
-void fb_move_cursor(unsigned short pos) {
+/** fb_move_cursor:
+ *  used to move the cursor within the frame buffer
+ *
+ *  param pos position within frame buffer to move cursor to
+ */
+void fb_move_cursor(unsigned short pos)
+{
     outb(FB_COMMAND_PORT, FB_HIGH_BYTE_COMMAND);
     outb(FB_DATA_PORT, ((pos>>8) & 0x00FF));
     outb(FB_COMMAND_PORT, FB_LOW_BYTE_COMMAND);
     outb(FB_DATA_PORT, pos & 0x00FF);
 }
 
-// TODO: Implement this write function
-//int write(char *buf, unsigned int len);
+
+/** fb_write:
+ *  write some text to the cursor
+ *
+ *  param buf pointer to character string
+ *  param len length of string to write
+ */
+void fb_write(char *buf, unsigned int len){
+
+    unsigned int i = 0;
+    for(i = 0; i < len; i++) {
+        fb_write_cell(i, buf[i], FB_BLACK, FB_WHITE);
+    }
+
+}
+
 
 
 // SERIAL PORT ================================================================
@@ -136,23 +165,16 @@ int serial_is_transmit_fifo_empty(unsigned int com)
 
 
 void run()
-{
-    fb_move_cursor(0);
-    fb_write_cell(0, 'H', FB_BLACK, FB_WHITE);
-    fb_write_cell(1, 'E', FB_BLACK, FB_WHITE);
-    fb_write_cell(2, 'L', FB_BLACK, FB_WHITE);
-    fb_write_cell(3, 'L', FB_BLACK, FB_WHITE);
-    fb_write_cell(4, '0', FB_BLACK, FB_WHITE);
-    fb_write_cell(5, ' ', FB_BLACK, FB_WHITE);
-    fb_write_cell(6, 'W', FB_BLACK, FB_WHITE);
-    fb_write_cell(7, 'O', FB_BLACK, FB_WHITE);
-    fb_write_cell(8, 'R', FB_BLACK, FB_WHITE);
-    fb_write_cell(9, 'L', FB_BLACK, FB_WHITE);
-    fb_write_cell(10, 'D', FB_BLACK, FB_WHITE);
-    fb_write_cell(11, ' ', FB_BLACK, FB_WHITE);
-    fb_write_cell(12, ' ', FB_BLACK, FB_WHITE);
-    fb_write_cell(13, ' ', FB_BLACK, FB_WHITE);
+{   
+    // try writing message to port
+    char* c = (char *) 10000;
+    c[0] = 'a';
+    c[1] = 'b';
 
+    fb_write((char*) 10000, 2);
+
+
+    // Write something to serial port
     unsigned short com = SERIAL_COM1_BASE;
 
     serial_configure_baud_rate(com, 1);
