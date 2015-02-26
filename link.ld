@@ -20,7 +20,11 @@ SECTIONS {
 
     .bss ALIGN (0x1000) :    /* align at 4 KB */
     {
+        sbss = .;
         *(COMMON)            /* all COMMON sections from all files */
         *(.bss)              /* all bss sections from all files */
+        ebss = .;
+
+       
     }
 }

@@ -10,7 +10,6 @@ outb:
     out dx, al
     ret
 
-
 global inb
 
 ; inb - returns a byte from the given I/O port
