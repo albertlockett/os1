@@ -2,12 +2,18 @@
 #include "fb.h"
 
 void run()
-{   
-    // try writing message to port
-    char* c = (char *) 10000;
-    c[0] = 'a';
-    c[1] = 'b';
+{   int i;
+	for(i = 0; i < 20; i++) {
+	    fb_write("hello world hello world ", 20);  
+	    fb_write("hello world hello world ", 20);  
+   	 	fb_write("hello world hello world ", 20);  
+   	 	fb_write("hello world hello world ", 20);  
+	    fb_write("hello world hello world ", 20);  
+	    fb_write("hello world hello world ", 20);  
+	    fb_write("hello world hello world ", 20);  
+	}
 
-    fb_write("ab", 2);  
+	fb_clear();
+	fb_write("albert ", 6);
 
 }

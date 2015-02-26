@@ -40,6 +40,8 @@
 void fb_write_cell(unsigned int i, char c, unsigned char fg, unsigned char bg);
 
 
+
+
 /** fb_move_cursor:
  *  used to move the cursor within the frame buffer
  *
@@ -47,6 +49,12 @@ void fb_write_cell(unsigned int i, char c, unsigned char fg, unsigned char bg);
  */
 void fb_move_cursor(unsigned short pos);
 
+
+void fb_scroll();
+void fb_clear();
+unsigned short fb_get_position();
+void fb_increment_cursor_row();
+void fb_increment_cursor_col();
 
 /** fb_write:
  *  write some text to the cursor
