@@ -72,6 +72,7 @@ void fb_increment_cursor_row() {
 	if(__fb_cursor_row ==  24) {
 		fb_scroll();
 	} else {
+		__fb_cursor_col= 0;
 		__fb_cursor_row++;
 	}
 }

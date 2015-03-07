@@ -1,19 +1,19 @@
 #include "io.h"
 #include "fb.h"
+#include "serial.h"
 
 void run()
-{   int i;
-	for(i = 0; i < 20; i++) {
-	    fb_write("hello world hello world ", 20);  
-	    fb_write("hello world hello world ", 20);  
-   	 	fb_write("hello world hello world ", 20);  
-   	 	fb_write("hello world hello world ", 20);  
-	    fb_write("hello world hello world ", 20);  
-	    fb_write("hello world hello world ", 20);  
-	    fb_write("hello world hello world ", 20);  
-	}
+{  
 
 	fb_clear();
-	fb_write("albert ", 6);
+	fb_write("starting operating system", 25);
+	fb_increment_cursor_row();
 
+	// configure serial port
+	fb_write("configuring serial port", 23);
+	serial_configure_default(SERIAL_COM1_BASE);
+
+
+	// begin logging to serial port
+	serial_write(SERIAL_COM1_BASE, "serial port initialized", 30);
 }

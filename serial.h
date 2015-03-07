@@ -59,6 +59,14 @@ void serial_configure_buffer(unsigned short com);
 void serial_configure_modem(unsigned short com);
 
 
+/** serial_configure_default
+ *  helper function to do default configuration of serial port
+ *
+ * @param com the base address of com port to use
+ */
+void serial_configure_default(unsigned short com);
+
+
 /** serial_is_transmit_fifo_empty:
  *  Checks whether the transmit FIFO queue is empty or not for the given COM
  *  port.
@@ -69,6 +77,22 @@ void serial_configure_modem(unsigned short com);
  */
 int serial_is_transmit_fifo_empty(unsigned int com);
 
-// TODO:Implement these functions
-// serial configure
-//serial_write
+
+/** serial_write_char
+ *  write one character to the com port
+ * 
+ *  @param com the base address of com port to write to
+ *  @param c the characer to write to port
+ */
+void serial_write_char(unsigned short com, char c);
+
+
+/** serial_write
+ *  write the contents of the character buffer to the string for the specified
+ *  number of characters
+ *
+ *  @param com the base address of the com port to write to
+ *  @param buff the buffer of characters
+ *  @param l the number of characters in the buffer to write
+ */
+void serial_write(unsigned short com, char * buff, int l);
