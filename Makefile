@@ -1,6 +1,6 @@
 OBJECTS = io.o fb.o serial.o loader.o kmain.o
 #CC = gcc
-CC = /home/albertlockett/opt/cross/bin/i386-elf-gcc
+CC = /home/albert/opt/cross/bin/i386-elf-gcc
 CFLAGS = -m32 -nostdlib -nostdinc -fno-builtin -fno-stack-protector \
          -nostartfiles -nodefaultlibs -Wall -Wextra -Werror -c
 LDFLAGS = -T link.ld -melf_i386
