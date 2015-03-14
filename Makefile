@@ -1,4 +1,4 @@
-OBJECTS = io.o fb.o serial.o loader.o kmain.o
+OBJECTS = io.o gdt.o interrupt.o fb.o serial.o loader.o kmain.o
 #CC = gcc
 CC = /home/albert/opt/cross/bin/i386-elf-gcc
 CFLAGS = -m32 -nostdlib -nostdinc -fno-builtin -fno-stack-protector \
